@@ -19,6 +19,12 @@ class ContaCorrente extends Model
         return $this->belongsTo('App\Correntista');
     }
 
+    public function transacoesBancarias()
+    {
+
+        return $this->hasMany(TransacaoBancaria::class);
+    }
+    
     /*  
         @description: 
         @author: uíres
