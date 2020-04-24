@@ -1,10 +1,11 @@
 <?php
+/*
+    Arquivo para tratamento dos endpoints
+*/
 
-use App\Correntista;
-Route::get('correntistas', "CorrentistaController@index");
-Route::get('correntistas/um', "CorrentistaController@salvarCorrentistaContaCorrente");
-Route::get('correntistas/salvar', "CorrentistaController@salvarCorrentista");
-
-Route::get('/', function () {
-    return view('welcome');
-});
+// Buscar a conta corrente com o número da conta e agência
+Route::get('contacorrente/saldo/{numeroConta}/{agencia}', "ContaCorrenteController@buscarSaldoContaCorrente");
+// Realiza deposíto
+Route::post('contacorrente/depositar/{numeroConta}/{agencia}', "ContaCorrenteController@depositar");
+// Realizar saque
+Route::post('contacorrente/realizasaque/{numeroConta}/{agencia}', "ContaCorrenteController@realizasaque");

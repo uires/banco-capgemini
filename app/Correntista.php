@@ -9,7 +9,6 @@ class Correntista extends Model
     protected $fillable = [
         'id', 'nome', 'senha', 'contaCorrente'
     ];
-
    
     protected $hidden = [
         'senha', 'remember_token',
