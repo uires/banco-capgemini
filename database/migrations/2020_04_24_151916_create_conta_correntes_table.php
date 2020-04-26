@@ -5,11 +5,6 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateContaCorrentesTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('conta_correntes', function (Blueprint $table) {
@@ -19,15 +14,10 @@ class CreateContaCorrentesTable extends Migration
             $table->string('agencia');
             $table->decimal('saldo', 9,2);
             $table->timestamps();
-            $table->foreign('id_correntista')->references('id')->on('correntistas')->onDelete('cascade');
+            $table->foreign('correntista_id')->references('id')->on('correntistas')->onDelete('cascade');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::drop('conta_correntes');

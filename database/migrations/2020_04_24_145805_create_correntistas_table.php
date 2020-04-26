@@ -1,33 +1,27 @@
 <?php
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 class CreateCorrentistasTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('correntistas', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('nome');
-            $table->string('senha');
-            $table->rememberToken();
-            $table->timestamps();
+        $table->increments('id');
+          $table->string('nome');
+          $table->string('username');
+          $table->string('password');
+          $table->string('email');
+          $table->boolean('active');
+          $table->rememberToken();
+          $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
-        Schema::drop('correntistas');
+        Schema::dropIfExists('correntistas');
     }
 }

@@ -7,7 +7,7 @@ class Transacoes extends Migration
 {
     public function up()
     {
-        Schema::create('transacoes_bancarias', function(Blueprint $table) {
+        Schema::create('transacao_bancarias', function(Blueprint $table) {
             $table->increments('id');
             $table->integer('conta_corrente_id')->unsigned();
             $table->decimal('valor', 9,2);
@@ -19,6 +19,6 @@ class Transacoes extends Migration
 
     public function down()
     {
-        Schema::drop('transacoes_bancarias');
+        Schema::drop('transacao_bancarias');
     }
 }

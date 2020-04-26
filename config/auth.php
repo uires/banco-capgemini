@@ -15,7 +15,7 @@ return [
 
     'defaults' => [
         'guard' => 'web',
-        'passwords' => 'users',
+        'passwords' => 'correntistas',
     ],
 
     /*
@@ -38,12 +38,12 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'correntistas',
         ],
 
         'api' => [
-            'driver' => 'token',
-            'provider' => 'users',
+            'driver' => 'passport',
+            'provider' => 'correntistas',
         ],
     ],
 
@@ -65,9 +65,9 @@ return [
     */
 
     'providers' => [
-        'users' => [
+        'correntistas' => [
             'driver' => 'eloquent',
-            'model' => App\User::class,
+            'model' => App\Correntista::class,
         ],
 
         // 'users' => [
@@ -96,9 +96,8 @@ return [
     */
 
     'passwords' => [
-        'users' => [
-            'provider' => 'users',
-            'email' => 'auth.emails.password',
+        'correntistas' => [
+            'provider' => 'correntistas',
             'table' => 'password_resets',
             'expire' => 60,
         ],
