@@ -35,10 +35,9 @@ class ContaCorrenteController extends Controller
                 'message'   => 'Conta corrente não encontrada',
             ], 404);
         }
-
-        $valor = $contaCorrente->depositarSaldo($request->input('valor'));
+        $valor = $contaCorrente->depositarSaldo($request->input('valor'), $request->input('tipo'));
         if ($contaCorrente == false)  return response()->json(['message' => 'Valor de deposito menor do que zero'], 404);
-
+        
         return response()->json($contaCorrente, 200);
     }
 
@@ -54,10 +53,9 @@ class ContaCorrenteController extends Controller
                 'message'   => 'Conta corrente não encontrada',
             ], 404);
         }
-
-        $valor = $contaCorrente->sacar($request->input('valor'));
+        $valor = $contaCorrente->sacar($request->input('valor'), $request->input('tipo'));
         if ($valor == false)  return response()->json(['message' => 'Valor de saque maior do que o saldo'], 404);
-
+        
         return response()->json($contaCorrente, 200);
     }
 }

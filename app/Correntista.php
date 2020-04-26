@@ -2,16 +2,20 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Laravel\Passport\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Correntista extends Model
+class Correntista extends Authenticatable
 {
+    use HasApiTokens, Notifiable;
+
     protected $fillable = [
-        'id', 'nome', 'senha', 'contaCorrente'
+        'id', 'nome', 'username', 'email'
     ];
    
     protected $hidden = [
-        'senha', 'remember_token',
+        'password', 'remember_token',
     ];
 
     public function contaCorrente()

@@ -2,6 +2,7 @@
 
 namespace App;
 use Illuminate\Database\Eloquent\Model;
+use \App\TransacaoBancaria;
 
 class ContaCorrente extends Model
 {   
@@ -29,7 +30,7 @@ class ContaCorrente extends Model
         @description: 
         @author: uíres
     */
-    public function depositarSaldo($saldo)
+    public function depositarSaldo($saldo, $tipo)
     {
         
         if ($saldo == 0.00 or $saldo < 0) {
@@ -37,8 +38,13 @@ class ContaCorrente extends Model
             return false;
         } else {
 
+            $transacaoBancaria = new TransacaoBancaria;
+            $transacaoBancaria->valor = $saldo;
+            $transacaoBancaria->tipo = $tipo;
+            
             $this->saldo += $saldo;
             $this->save();
+            $this->transacoesBancarias()->saveMany([$transacaoBancaria]);
             return true;
         }
     }
@@ -47,7 +53,7 @@ class ContaCorrente extends Model
         @description: verificar se há saldo acima do espero pra realizar a transação e realiza caso sim
         @author: uíres
     */
-    public function sacar($valor)
+    public function sacar($valor, $tipo)
     {
 
         if ($valor > $this->saldo) {
@@ -58,12 +64,22 @@ class ContaCorrente extends Model
             return false;
         } else {
 
+            $transacaoBancaria = new TransacaoBancaria;
+            $transacaoBancaria->valor = $valor;
+            $transacaoBancaria->tipo = $tipo;
+
             $this->saldo = $this->saldo - $valor;
             $this->save();
+            $this->transacoesBancarias()->saveMany([$transacaoBancaria]);
             return true;
         }
     }
-    
+
+    private function formatarValorFloat() 
+    {
+	
+	$this->saldo = number_format($this->saldo, 2, ',', '.');	
+    }
     /*
         @description: buscar o a conta corrente com base no número da agência e numero de conta
         @author: uíres
@@ -71,11 +87,12 @@ class ContaCorrente extends Model
     public function buscarContaPorNumeroContaAgencia($numeroConta, $agencia)
     {
 
-        $contas = $this->whereRaw('numero_conta = ? and agencia = ?', array($numeroConta, $agencia))->get();
+        $contas = $this->select()->where('numero_conta', $numeroConta)->where('agencia', $agencia)->get();
         if (count($contas) == 0) {
 
             return null;
         }
+	    // $contas[0]->formatarValorFloat();
         return $contas[0];
     }
 }

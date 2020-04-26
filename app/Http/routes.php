@@ -3,6 +3,8 @@
     Arquivo para tratamento dos endpoints
 */
 
+Route::get('transacoes', "TransacoesController@index");
+Route::get('correntistas', "CorrentistaController@index");
 // Buscar a conta corrente com o número da conta e agência
 Route::get('contacorrente/saldo/{numeroConta}/{agencia}', "ContaCorrenteController@buscarSaldoContaCorrente");
 // Realiza deposíto
